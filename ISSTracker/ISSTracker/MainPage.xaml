@@ -1,24 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              x:Class="ISSTracker.MainPage">
-
     <StackLayout>
-        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
-            <Label Text="Welcome to Xamarin.Forms!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
-        </Frame>
-        <Label Text="Start developing now" FontSize="Title" Padding="30,10,30,10"/>
-        <Label Text="Make changes to your XAML file and save to see your UI update in the running app with XAML Hot Reload. Give it a try!" FontSize="16" Padding="30,0,30,0"/>
-        <Label FontSize="16" Padding="30,24,30,0">
-            <Label.FormattedText>
-                <FormattedString>
-                    <FormattedString.Spans>
-                        <Span Text="Learn more at "/>
-                        <Span Text="https://aka.ms/xamarin-quickstart" FontAttributes="Bold"/>
-                    </FormattedString.Spans>
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
+        <Label Padding="10" Text="ISS Tracker 🚀" TextColor="#2196f3" FontSize="32" HorizontalTextAlignment="Center" x:Name="ISSHeading"/>
+        <maps:Map x:Name="ISSMap">
+            <x:Arguments>
+                <maps:MapSpan>
+                    <x:Arguments>
+                        <maps:Position>
+                            <x:Arguments>
+                                <x:Double>29.558163667663727</x:Double>
+                                <x:Double>-95.08932667719122</x:Double>
+                            </x:Arguments>
+                        </maps:Position>
+                        <x:Double>0.001</x:Double>
+                        <x:Double>0.001</x:Double>
+                    </x:Arguments>
+                </maps:MapSpan>
+            </x:Arguments>
+        </maps:Map>
+        <Label Padding="10" Text="Retrieve Location" TextColor="#2196f3" FontSize="24" HorizontalTextAlignment="Center" x:Name="RetrieveLabel"/>
+        <Button Text="Retrieve Current Location" Clicked="Button_Clicked_1" />
     </StackLayout>
-
 </ContentPage>
