@@ -58,13 +58,6 @@ namespace ISSTracker
                 doubleILat = double.Parse(issLat);
                 doubleILon = double.Parse(issLon);
                 issPosition = new Position(doubleILat, doubleILon);
-                Pin issPin = new Pin
-                {
-                    Position = issPosition,
-                    Label = "ISS Location",
-                    Type = PinType.Generic
-                };
-                ISSMap.Pins.Add(issPin);
             }
             else
             {
@@ -99,17 +92,11 @@ namespace ISSTracker
                     doubleULat = double.Parse(latitude);
                     doubleULon = double.Parse(longitude);
                     userPosition = new Position(doubleULat, doubleULon);
-                    Pin userPin = new Pin
-                    {
-                        Position = userPosition,
-                        Label = "User Location",
-                        Type = PinType.Generic
-                    };
-                    ISSMap.Pins.Add(userPin);
                     try
                     {
                         await GetJsonAsync();
-                        ISSMap.MoveToRegion(MapSpan.FromCenterAndRadius(issPosition, Distance.FromMiles(0.001)));
+                        DisplayPins();
+                        ISSMap.MoveToRegion(MapSpan.FromCenterAndRadius(issPosition, Distance.FromMiles(1000)));
                         string issDistance = Location.CalculateDistance(doubleILat, doubleILon, doubleULat, doubleULon, DistanceUnits.Miles).ToString();
                         doubleIDistance = double.Parse(issDistance);
                         int intIDistance = Convert.ToInt32(doubleIDistance);
@@ -139,13 +126,50 @@ namespace ISSTracker
             }
         }
 
-        // honestly don't remember what this is for
+        // Unsubscribe from location services when app minimized
 
         protected override void OnDisappearing()
         {
             if (cts != null && !cts.IsCancellationRequested)
                 cts.Cancel();
             base.OnDisappearing();
+        }
+
+        // Created a function to visually display locations
+        private void DisplayPins()
+        {
+            ISSMap.Pins.Clear();
+            ISSMap.MapElements.Clear();
+
+            Pin userPin = new Pin
+            {
+                Position = userPosition,
+                Label = "User Location",
+                Type = PinType.Generic
+            };
+            
+
+            Pin issPin = new Pin
+            {
+                Position = issPosition,
+                Label = "ISS Location",
+                Type = PinType.Generic
+            };
+
+            ISSMap.Pins.Add(userPin);
+            ISSMap.Pins.Add(issPin);
+
+            var polyline = new Polyline
+            {
+                StrokeColor = Color.SteelBlue,
+                StrokeWidth = 10,
+                Geopath =
+            {
+                userPosition, issPosition
+            }
+            };
+            ISSMap.MapElements.Add(polyline);
+
         }
     }
 }

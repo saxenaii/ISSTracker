@@ -21,7 +21,7 @@
                 </maps:MapSpan>
             </x:Arguments>
         </maps:Map>
-        <Label Padding="10" Text="Retrieve Location" TextColor="#2196f3" FontSize="24" HorizontalTextAlignment="Center" x:Name="RetrieveLabel"/>
+        <Label Padding="10" Text="Press the button below!" TextColor="#2196f3" FontSize="24" HorizontalTextAlignment="Center" x:Name="RetrieveLabel"/>
         <Button Text="Retrieve Current Location" Clicked="Button_Clicked_1" />
     </StackLayout>
 </ContentPage>
